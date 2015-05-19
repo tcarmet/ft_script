@@ -46,20 +46,22 @@ else
 		echo "\\033[1;31mCompilation with -Wall -Wextra -Werror...\\033[0;39m"
 endif
 		echo "\\033[1;34mGenerating objects... Please wait.\\033[0;39m"
-			printf "\\033[40mm LOADING..."
-			printf "\\033[44m          "
+			printf "\\033[40m LOADING..."
+			printf "\\033[44m        "
 			git submodule init
-			printf "         "
+			printf "        "
 			git submodule update
-			printf "         "			
+			printf "        "			
 			make -C libft/
-			printf "         "
+			printf "        "
 			gcc $(FLAG) -c $(SRCS) -I $(INCDIR) -I $(INCDIRLIB)
-			printf "         "
-			mkdir -p $(OBJDIR) ; mv $(OBJ) $(OBJDIR)
-			printf "         "
+			printf "        "
+			mkdir -p $(OBJDIR)
+			printf "        "
+			mv $(OBJ) $(OBJDIR)
+			printf "        "
 			gcc $(FLAG) -o $(NAME) $(OBJS) -L ./libft/ -lft
-			printf "         "
+			printf "        "
 			printf "\\033[0;39m\n"
 
 clean:
