@@ -45,21 +45,22 @@ ifeq ($(DEBUG),yes)
 else
 		echo "\\033[1;31mCompilation with -Wall -Wextra -Werror...\\033[0;39m"
 endif
-		echo "\\033[1;34mGenerating objects... Please wait.\\033[44m"
-			echo -n \[\|\|\|\|\|\|\|\|
+		echo "\\033[1;34mGenerating objects... Please wait.\\033[0;39m"
+			printf "\\033[44m"
+			printf \[\|\|\|\|\|\|\|\|
 			git submodule init
-			echo -n \|\|\|\|\|\|\|\|
+			printf \|\|\|\|\|\|\|\|
 			git submodule update
-			echo -n \|\|\|\|\|\|\|\|			
+			printf \|\|\|\|\|\|\|\|			
 			make -C libft/
-			echo -n \|\|\|\|\|\|\|\|
+			printf \|\|\|\|\|\|\|\|
 			gcc $(FLAG) -c $(SRCS) -I $(INCDIR) -I $(INCDIRLIB)
-			echo -n \|\|\|\|\|\|\|\|
+			printf \|\|\|\|\|\|\|\|
 			mkdir -p $(OBJDIR) ; mv $(OBJ) $(OBJDIR)
-			echo -n \|\|\|\|\|\|\|\|
+			printf \|\|\|\|\|\|\|\|
 			gcc $(FLAG) -o $(NAME) $(OBJS) -L ./libft/ -lft
-			echo -n \|\|\|\|\|\|\|\|\]
-			echo "\\033[0;39m"
+			printf \|\|\|\|\|\|\|\|\]
+			printf "\\033[0;39m\n"
 
 clean:
 	rm -rf $(OBJS)
