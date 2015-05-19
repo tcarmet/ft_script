@@ -47,19 +47,19 @@ else
 endif
 		echo "\\033[1;34mGenerating objects... Please wait.\\033[0;39m"
 			printf "\\033[44m"
-			printf \[\|\|\|\|\|\|\|\|
+			printf "        "
 			git submodule init
-			printf \|\|\|\|\|\|\|\|
+			printf "        "
 			git submodule update
-			printf \|\|\|\|\|\|\|\|			
+			printf "        "			
 			make -C libft/
-			printf \|\|\|\|\|\|\|\|
+			printf "        "
 			gcc $(FLAG) -c $(SRCS) -I $(INCDIR) -I $(INCDIRLIB)
-			printf \|\|\|\|\|\|\|\|
+			printf "        "
 			mkdir -p $(OBJDIR) ; mv $(OBJ) $(OBJDIR)
-			printf \|\|\|\|\|\|\|\|
+			printf "        "
 			gcc $(FLAG) -o $(NAME) $(OBJS) -L ./libft/ -lft
-			printf \|\|\|\|\|\|\|\|\]
+			printf "        "
 			printf "\\033[0;39m\n"
 
 clean:
