@@ -6,7 +6,7 @@
 #    By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/19 17:20:13 by tcarmet           #+#    #+#              #
-#    Updated: 2015/05/19 18:34:12 by tcarmet          ###   ########.fr        #
+#    Updated: 2015/05/22 12:31:15 by tcarmet          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,7 @@ else
     FLAG	=-g3
 endif
 
-SRC		= ft_script.c
+SRC		= ft_script.c misc.c ft_arg.c
 
 OBJ		= $(SRC:.c=.o)
 
@@ -72,6 +72,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 	make -C libft/ fclean
+	rm -rf typescript
 
 re: fclean all
 
