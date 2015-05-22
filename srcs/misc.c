@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 19:29:18 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 20:45:30 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		ft_error(int error, char c)
 		ft_putchar_fd(c, 2);
 		ft_putendl_fd("\nusage: script [-aq] [file [command ...]]", 2);
 	}
+	else if (error == OPEN_FAIL)
+		ft_putendl_fd("ft_script: Permission denied.", 2);
 	_exit(-1);
 }
 

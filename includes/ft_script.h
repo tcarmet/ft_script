@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 19:26:53 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 20:45:26 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # include <signal.h>
 # define IN 1
 # define OUT 0
-# define QUIET 0
-# define APPEND 1
+# define QUIET all->arg[0]
+# define APPEND all->arg[1]
+# define FILE all->arg[2]
+# define CMD all->arg[3]
 
 typedef enum	e_enum
 {
@@ -29,6 +31,7 @@ typedef enum	e_enum
 	FORK_FAIL,
 	SHELL_FAIL,
 	ARG_FAIL,
+	OPEN_FAIL,
 }				t_error;
 
 typedef struct	s_all
@@ -37,9 +40,7 @@ typedef struct	s_all
 	pid_t	pid;
 	int		pipe[2];
 	int		fd;
-	int		arg[2];
-	int		file;
-	int		cmd; 
+	int		arg[4];
 }				t_all;
 
 /*

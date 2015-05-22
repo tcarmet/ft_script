@@ -6,15 +6,20 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 19:38:40 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 20:45:22 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_script.h"
 
+void	ft_init_all(t_all *all)
+{
+	ft_bzero(all->arg, 4);
+}
+
 void	ft_init(t_all *all, char **env)
 {	
-	char	*shell[] = {"/bin/zsh", NULL};
+	char	*shell[] = {"/bin/csh", NULL};
 
 	if (pipe(all->pipe) < 0)
 		ft_error(PIPE_FAIL, ' ');
@@ -37,26 +42,28 @@ void	ft_script(t_all *all, char **av)
 	char	c[1025];
 	int		i;
 
-	all->fd = -1;
+	all->fd = 0;
 	gettimeofday(&(all->time), NULL);
-	if (all->file)
+	if (FILE)
 	{
-		all->fd = open(av[all->file], O_TRUNC | O_RDWR | O_CREAT);
-		ft_aff(all, av[all->file]);
+		if ((all->fd = open(av[FILE], O_TRUNC | O_RDWR | O_CREAT , S_IRWXU)) < 0)
+			ft_error(OPEN_FAIL, ' ');
+		ft_aff(all, av[FILE]);
 	}
-	if (all->fd == -1)
+	if (all->fd == 0)
 	{
-		all->fd = open("typescript", O_TRUNC | O_RDWR | O_CREAT);
+		if ((all->fd = open("typescript", O_TRUNC | O_RDWR | O_CREAT , S_IRWXU)) < 0)
+			ft_error(OPEN_FAIL, ' ');
 		ft_aff(all, "typescript");
 	}
-	ft_bzero(c, ft_strlen(c));
+	ft_bzero(c, ft_strlen(c) + 1);
 	while ((i = read(all->pipe[OUT], c, 1024)) > 0)
 	{
 		if (c)
 		{
 			write(1, c, i);
 			write(all->fd, c, i);
-			ft_bzero(c, ft_strlen(c));
+			ft_bzero(c, ft_strlen(c) + 1);
 		}
 	}
 }
@@ -65,8 +72,7 @@ int		main(int ac, char **av, char **env)
 {
 	t_all all;
 
-	all.file = 0;
-	all.cmd = 0;
+	ft_init_all(&all);
 	if (ac >= 2)
 		ft_check_arg(&all, av);
 	ft_init(&all, env);
