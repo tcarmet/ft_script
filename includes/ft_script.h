@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 21:52:23 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 23:12:14 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef enum	e_enum
 	SHELL_FAIL,
 	ARG_FAIL,
 	OPEN_FAIL,
+	BEGIN,
+	END,
 }				t_error;
 
 typedef struct	s_all
@@ -49,7 +51,7 @@ typedef struct	s_all
 **	misc.c
 */
 int		ft_error(int error, char c);
-void	ft_aff(t_all *all, char *str);
+void	ft_aff(t_all *all, char *str, int i);
 /*
 **	ft_arg.c
 */

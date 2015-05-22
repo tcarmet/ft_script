@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 21:39:40 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 23:13:42 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,24 @@ int		ft_error(int error, char c)
 	_exit(error);
 }
 
-void	ft_aff(t_all *all, char *str)
+void	ft_aff(t_all *all, char *str, int i)
 {
 	if (!QUIET)
 	{
-		ft_putstr("Script started, output file is ");
-		ft_putendl(str);
-		ft_putstr_fd("Script started on ", all->fd);
-		ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
+		if (i == BEGIN)
+		{
+			ft_putstr("Script started, output file is ");
+			ft_putendl(str);
+			ft_putstr_fd("Script started on ", all->fd);
+			ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
+		}
+		else
+		{
+			ft_putstr("Script done, output file is ");
+			ft_putendl(str);
+			ft_putstr_fd("Script done on ", all->fd);
+			ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
+			close(all->fd);
+		}
 	}
 }
