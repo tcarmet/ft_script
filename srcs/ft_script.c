@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 18:05:10 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 19:38:40 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	ft_init(t_all *all, char **env)
 {	
-	char	*shell[] = {"/bin/csh", NULL};
+	char	*shell[] = {"/bin/zsh", NULL};
 
-	// all->file = 0;
-	// all->cmd = 0;
 	if (pipe(all->pipe) < 0)
 		ft_error(PIPE_FAIL, ' ');
 	all->pid = fork();
@@ -40,10 +38,17 @@ void	ft_script(t_all *all, char **av)
 	int		i;
 
 	all->fd = -1;
+	gettimeofday(&(all->time), NULL);
 	if (all->file)
+	{
 		all->fd = open(av[all->file], O_TRUNC | O_RDWR | O_CREAT);
+		ft_aff(all, av[all->file]);
+	}
 	if (all->fd == -1)
+	{
 		all->fd = open("typescript", O_TRUNC | O_RDWR | O_CREAT);
+		ft_aff(all, "typescript");
+	}
 	ft_bzero(c, ft_strlen(c));
 	while ((i = read(all->pipe[OUT], c, 1024)) > 0)
 	{
@@ -59,6 +64,9 @@ void	ft_script(t_all *all, char **av)
 int		main(int ac, char **av, char **env)
 {
 	t_all all;
+
+	all.file = 0;
+	all.cmd = 0;
 	if (ac >= 2)
 		ft_check_arg(&all, av);
 	ft_init(&all, env);

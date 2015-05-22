@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 17:56:52 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 19:26:53 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define FT_SCRIPT_H
 # include "libft.h"
 # include <fcntl.h>
+# include <time.h>
+# include <sys/time.h>
 # include <sys/wait.h>
 # include <signal.h>
 # define IN 1
@@ -31,6 +33,7 @@ typedef enum	e_enum
 
 typedef struct	s_all
 {
+	struct	timeval time;
 	pid_t	pid;
 	int		pipe[2];
 	int		fd;
@@ -43,6 +46,7 @@ typedef struct	s_all
 **	misc.c
 */
 int		ft_error(int error, char c);
+void	ft_aff(t_all *all, char *str);
 /*
 **	ft_arg.c
 */
