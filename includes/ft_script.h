@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 20:45:26 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 21:52:23 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define APPEND all->arg[1]
 # define FILE all->arg[2]
 # define CMD all->arg[3]
+# define FLAG O_RDWR | O_CREAT | (APPEND ? O_APPEND : O_TRUNC), S_IRWXU
 
 typedef enum	e_enum
 {
@@ -37,7 +38,8 @@ typedef enum	e_enum
 typedef struct	s_all
 {
 	struct	timeval time;
-	pid_t	pid;
+	pid_t	pid_shell;
+	pid_t	pid_read;
 	int		pipe[2];
 	int		fd;
 	int		arg[4];

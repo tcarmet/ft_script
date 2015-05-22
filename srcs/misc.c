@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 20:45:30 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 21:39:40 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ int		ft_error(int error, char c)
 	}
 	else if (error == OPEN_FAIL)
 		ft_putendl_fd("ft_script: Permission denied.", 2);
-	_exit(-1);
+	_exit(error);
 }
 
 void	ft_aff(t_all *all, char *str)
 {
-	ft_putstr("Script started, output file is ");
-	ft_putendl(str);
-	ft_putstr_fd("Script started on ", all->fd);
-	ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
+	if (!QUIET)
+	{
+		ft_putstr("Script started, output file is ");
+		ft_putendl(str);
+		ft_putstr_fd("Script started on ", all->fd);
+		ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
+	}
 }

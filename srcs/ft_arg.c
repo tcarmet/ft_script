@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 17:42:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 20:34:35 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/22 21:43:05 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 void	ft_check_option(char *str, t_all *all)
 {
-	int i;
-
-	i = 1;
-	while (str[i])
+	while (str++ && *str)
 	{
-		if (str[i] == 'a')
+		if (*str == 'a')
 			APPEND = 1;
-		else if (str[i] == 'q')
+		else if (*str == 'q')
 			QUIET = 1;
-		else if (str[i] != 'a' || str[i] != 'q')
-			ft_error(ARG_FAIL, str[i]);
-		i++;
+		else if (*str != 'a' || *str != 'q')
+			ft_error(ARG_FAIL, *str);
 	}
 }
 
