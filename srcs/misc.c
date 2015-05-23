@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 16:20:09 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:21:50 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int		ft_error(int error)
 		ft_putendl_fd("Error Exiting/Executing shell", 2);
 	else if (error == PATH_FAIL)
 		ft_putendl_fd("ft_script: Path not found.", 2);
-	else if (error == CMD_FAIL)
-		ft_putendl_fd("ft_script: command not found", 2);
 	_exit(error);
 }
 
@@ -31,7 +29,7 @@ int		ft_str_error(int error, char *str)
 {
 	if (error == ARG_FAIL)
 	{
-		ft_putstr_fd("script: illegal option -- ", 2);
+		ft_putstr_fd("ft_script: illegal option -- ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("\nusage: script [-aq] [file [command ...]]", 2);
 	}
@@ -41,7 +39,12 @@ int		ft_str_error(int error, char *str)
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd(": Permission denied.", 2);
 	}
-
+	else if (error == CMD_FAIL)
+	{
+		ft_putstr_fd("ft_script: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
 	_exit(error);
 }
 

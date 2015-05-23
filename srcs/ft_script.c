@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 18:00:17 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:20:02 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exec_cmd(char **env, char **av)
 		ft_exec_arg(env, av, i, j);
 		j++;
 	}
-	ft_error(CMD_FAIL);
+	ft_str_error(CMD_FAIL, av[0]);
 }
 
 void	ft_read(t_all *all)
