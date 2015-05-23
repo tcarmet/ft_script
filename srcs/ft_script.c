@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 17:21:55 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:00:17 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_read(t_all *all)
 	char	c[1025];
 
 	ft_bzero(c, 1025);
+	close(all->pipe[IN]);
 	while ((i = read(all->pipe[OUT], c, 1024)) > 0)
 	{
 		write(1, c, i);
@@ -71,13 +72,7 @@ void	ft_script(t_all *all, char **av)
 	if ((all->fd = open(av[FILE], FLAG)) < 0)
 		ft_str_error(OPEN_FAIL, av[FILE]);
 	ft_aff(all, av[FILE], BEGIN);
-	all->pid_read = fork();
-	if (all->pid_read < 0)
-		ft_error(FORK_FAIL);
-	if (all->pid_read == 0)
-		ft_read(all);
-	waitpid(all->pid_shell, NULL, WUNTRACED);
-	kill(all->pid_read, 9);
+	ft_read(all);;
 	ft_aff(all, av[FILE], END);
 }
 

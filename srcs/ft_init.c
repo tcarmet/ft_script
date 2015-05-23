@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 17:31:37 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 17:57:44 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_init(t_all *all, char **env, char **av)
 		dup2(all->pipe[IN], 1);
 		dup2(all->pipe[IN], 2);
 		dup2(all->pipe[IN], 3);
+		close(all->pipe[OUT]);
 		if (!CMD)
 			execve(shell[0], shell, env);
 		else

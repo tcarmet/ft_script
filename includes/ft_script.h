@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 17:23:50 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:00:35 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct	s_all
 {
 	struct	timeval time;
 	pid_t	pid_shell;
-	pid_t	pid_read;
 	int		pipe[2];
 	int		fd;
 	int		arg[4];
