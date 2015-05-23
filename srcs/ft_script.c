@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 18:26:24 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 19:33:34 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_exec_arg(char **env, char **av, int i, int j)
 {
-	char path[1024];
-	int k;
-	int l;
+	char	path[1024];
+	int		k;
+	int		l;
 
 	l = 0;
 	while (env[i][j] && env[i][j] != ':' && env[i][j] != '=')
@@ -24,7 +24,7 @@ void	ft_exec_arg(char **env, char **av, int i, int j)
 	path[l++] = '/';
 	k = 0;
 	while (av[0][k] && av[0][k] != '/')
-		 path[l++] = av[0][k++];
+		path[l++] = av[0][k++];
 	path[l] = 0;
 	if (av[0][k] == '/' && !access(path, X_OK))
 		execve(av[0], av, env);
@@ -68,10 +68,12 @@ void	ft_script(t_all *all, char **av)
 {
 	all->fd = 0;
 	gettimeofday(&(all->time), NULL);
-	if ((all->fd = open(av[FILE], FLAG)) < 0)
+	if ((all->fd = open(av[FILE], O_WRONLY | (APPEND ? O_APPEND : O_CREAT | O_TRUNC)\
+		, S_IRUSR | S_IWUSR | S_IRGRP
+		| S_IWGRP | S_IROTH | S_IWOTH) < 0))
 		ft_str_error(OPEN_FAIL, av[FILE]);
 	ft_aff(all, av[FILE], BEGIN);
-	ft_read(all);;
+	ft_read(all);
 	ft_aff(all, av[FILE], END);
 }
 

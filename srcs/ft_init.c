@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 18:41:10 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 19:27:36 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_init_all(t_all *all, char **av, char **env)
 }
 
 void	ft_init(t_all *all, char **env, char **av)
-{	
+{
 	char	*shell[2];
 
 	shell[0] = "/bin/csh";
