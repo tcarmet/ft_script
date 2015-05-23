@@ -6,13 +6,13 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 23:13:42 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 16:20:09 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_script.h"
 
-int		ft_error(int error, char c)
+int		ft_error(int error)
 {
 	if (error == PIPE_FAIL)
 		ft_putendl_fd("Error: could not pipe", 2);
@@ -20,14 +20,28 @@ int		ft_error(int error, char c)
 		ft_putendl_fd("Error: could not fork", 2);
 	else if (error == SHELL_FAIL)
 		ft_putendl_fd("Error Exiting/Executing shell", 2);
-	else if (error == ARG_FAIL)
+	else if (error == PATH_FAIL)
+		ft_putendl_fd("ft_script: Path not found.", 2);
+	else if (error == CMD_FAIL)
+		ft_putendl_fd("ft_script: command not found", 2);
+	_exit(error);
+}
+
+int		ft_str_error(int error, char *str)
+{
+	if (error == ARG_FAIL)
 	{
 		ft_putstr_fd("script: illegal option -- ", 2);
-		ft_putchar_fd(c, 2);
+		ft_putstr_fd(str, 2);
 		ft_putendl_fd("\nusage: script [-aq] [file [command ...]]", 2);
 	}
 	else if (error == OPEN_FAIL)
-		ft_putendl_fd("ft_script: Permission denied.", 2);
+	{
+		ft_putstr_fd("ft_script: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": Permission denied.", 2);
+	}
+
 	_exit(error);
 }
 

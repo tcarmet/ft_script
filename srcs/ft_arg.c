@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 17:42:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/22 21:43:05 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 16:16:01 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_check_option(char *str, t_all *all)
 		else if (*str == 'q')
 			QUIET = 1;
 		else if (*str != 'a' || *str != 'q')
-			ft_error(ARG_FAIL, *str);
+			ft_str_error(ARG_FAIL, &(*str));
 	}
 }
 
@@ -32,7 +32,7 @@ void	ft_check_arg(t_all *all, char **av)
 	i = 1;
 	while (av[i])
 	{
-		if (av[i][0] == '-')
+		if (av[i][0] == '-' && !CMD)
 			ft_check_option(av[i], all);
 		else if (av[i] && !FILE)
 			FILE = i;
