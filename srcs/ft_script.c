@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 18:20:02 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:26:24 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_exec_arg(char **env, char **av, int i, int j)
 		execve(av[0], av, env);
 	if (!access(path, X_OK))
 		execve(path, av, env);
-		
 }
 
 void	ft_exec_cmd(char **env, char **av)

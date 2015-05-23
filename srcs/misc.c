@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 18:21:50 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/23 18:34:44 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_aff(t_all *all, char *str, int i)
 		}
 		else
 		{
-			ft_putstr("Script done, output file is ");
+			ft_putstr("\nScript done, output file is ");
 			ft_putendl(str);
 			ft_putstr_fd("Script done on ", all->fd);
 			ft_putstr_fd(ctime(&(all->time.tv_sec)), all->fd);
