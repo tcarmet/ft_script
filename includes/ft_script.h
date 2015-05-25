@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/23 19:29:48 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/25 11:46:27 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define FILE all->arg[2]
 # define CMD all->arg[3]
 # define PATH "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+# define FLAG O_RDWR | O_CREAT | (APPEND ? O_APPEND : O_TRUNC), S_IRWXU
 
 typedef enum		e_enum
 {
