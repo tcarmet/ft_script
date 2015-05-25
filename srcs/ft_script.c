@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/25 11:47:10 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/25 19:34:26 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ int		main(int ac, char **av, char **env)
 {
 	t_all all;
 
+
 	ft_init_all(&all, av, env);
 	if (ac >= 2)
 		ft_check_arg(&all, av);
 	ft_init(&all, env, av);
+	ft_script_signal(&all);
+	ft_stock(&all, 0);
 	ft_script(&all, av);
 	return (0);
 }

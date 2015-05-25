@@ -19,7 +19,7 @@ else
     FLAG	=-g3
 endif
 
-SRC		= ft_script.c misc.c ft_arg.c ft_init.c
+SRC		= ft_script.c misc.c ft_arg.c ft_init.c ft_signal.c
 
 OBJ		= $(SRC:.c=.o)
 
