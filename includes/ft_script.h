@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/25 19:34:35 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/26 14:56:31 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum			e_enum
 typedef struct			s_all
 {
 	struct sigaction	sig_new;
-	struct sigaction	sig_old;
+	// struct sigaction	sig_old;
 	struct timeval		time;
 	pid_t				pid_shell;
 	int					pipe[2];

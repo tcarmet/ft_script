@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/25 19:02:45 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/26 16:57:11 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_init(t_all *all, char **env, char **av)
 {
 	char	*shell[2];
 
-	shell[0] = "/bin/csh";
+	shell[0] = "/bin/zsh";
 	shell[1] = NULL;
 	if (pipe(all->pipe) < 0)
 		ft_error(PIPE_FAIL);
@@ -33,10 +33,6 @@ void	ft_init(t_all *all, char **env, char **av)
 		ft_error(FORK_FAIL);
 	if (all->pid_shell == 0)
 	{
-		all->sig_old.sa_handler = SIG_IGN;
-		sigaction(SIGINT, &(all->sig_old), NULL);
-		// ft_script_signal(all);
-		// ft_stock(all, 0);
 		dup2(all->pipe[IN], 1);
 		dup2(all->pipe[IN], 2);
 		dup2(all->pipe[IN], 3);
