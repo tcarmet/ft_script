@@ -6,7 +6,7 @@
 #    By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/05/19 17:20:13 by tcarmet           #+#    #+#              #
-#    Updated: 2015/05/22 12:31:15 by tcarmet          ###   ########.fr        #
+#    Updated: 2015/05/27 15:23:31 by tcarmet          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -47,21 +47,21 @@ else
 endif
 		echo "\\033[1;34mGenerating objects... Please wait.\\033[0;39m"
 			printf "\\033[40m LOADING..."
-			printf "\\033[44m        "
+			printf "\\033[44m      "
 			git submodule init
-			printf "        "
+			printf "       "
 			git submodule update
-			printf "        "			
+			printf "       "			
 			make -C libft/
-			printf "        "
+			printf "       "
 			gcc $(FLAG) -c $(SRCS) -I $(INCDIR) -I $(INCDIRLIB)
-			printf "        "
+			printf "       "
 			mkdir -p $(OBJDIR)
-			printf "        "
+			printf "       "
 			mv $(OBJ) $(OBJDIR)
-			printf "        "
+			printf "       "
 			gcc $(FLAG) -o $(NAME) $(OBJS) -L ./libft/ -lft
-			printf "        "
+			printf "       "
 			printf "\\033[0;39m\n"
 
 clean:

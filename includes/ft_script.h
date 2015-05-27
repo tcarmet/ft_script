@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/26 14:56:31 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 14:25:09 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <fcntl.h>
 # include <time.h>
 # include <signal.h>
+# include <sys/select.h>
+# include <sys/ioctl.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -26,7 +28,7 @@
 # define FILE all->arg[2]
 # define CMD all->arg[3]
 # define PATH "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-# define FLAG O_RDWR | O_CREAT | (APPEND ? O_APPEND : O_TRUNC), S_IRWXU
+# define FLAG O_RDWR | O_CREAT | (APPEND ? O_APPEND : O_TRUNC) , S_IRWXU
 # define DEFAULT_FILE "typescript"
 
 typedef enum			e_enum
@@ -41,16 +43,21 @@ typedef enum			e_enum
 	PATH_FAIL,
 	CMD_FAIL,
 	SIG_FAIL,
+	PTY_FAIL,
 }						t_error;
 
 typedef struct			s_all
 {
+	fd_set				set;
 	struct sigaction	sig_new;
 	// struct sigaction	sig_old;
 	struct timeval		time;
 	pid_t				pid_shell;
 	int					pipe[2];
 	int					fd;
+	int					fd_master;
+	int					fd_slave;
+	int					pty;
 	int					arg[4];
 }						t_all;
 

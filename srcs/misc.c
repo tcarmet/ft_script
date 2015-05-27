@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:27:44 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/25 15:30:09 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 14:56:08 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int		ft_error(int error)
 		ft_putendl_fd("ft_script: Path not found.", 2);
 	else if (error == SIG_FAIL)
 		ft_putendl_fd("ft_script: Error signal", 2);
+	else if (error == PTY_FAIL)
+		ft_putendl_fd("ft_script: Error pty", 2);
 	_exit(error);
 }
 
@@ -70,5 +72,8 @@ void	ft_aff(t_all *all, char *str, int i)
 		}
 	}
 	if (i == END)
+	{
 		close(all->fd);
+		close(all->fd_master);
+	}
 }

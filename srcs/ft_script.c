@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/26 14:40:36 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 15:50:10 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,31 @@ void	ft_exec_cmd(char **env, char **av)
 	ft_str_error(CMD_FAIL, av[0]);
 }
 
-void	ft_read(t_all *all)
+void		ft_read(t_all *all)
 {
-	int		i;
-	char	c[1025];
+	char		buf[65];
+	int			ret;
 
-	ft_bzero(c, 1025);
-	close(all->pipe[IN]);
-	while ((i = read(all->pipe[OUT], c, 1024)) > 0)
+	while (waitpid(all->pid_shell, &ret, WNOHANG) != all->pid_shell)
 	{
-		write(1, c, i);
-		write(all->fd, c, i);
-		ft_bzero(c, 1025);
+		FD_SET(0, &(all->set));
+		FD_SET(all->fd_master, &(all->set));
+		select(all->fd_master + 1, &(all->set), NULL, NULL, NULL);
+		if (FD_ISSET(0, &(all->set)))
+		{
+			ret = read(0, buf, 64);
+			if (ret > 0)
+				write(all->fd_master, buf, ret);
+		}
+		if (FD_ISSET(all->fd_master, &(all->set)))
+		{
+			ret = read(all->fd_master, buf, 64);
+			if (ret > 0)
+			{
+				write(1, buf, ret);
+				write(all->fd, buf, ret);
+			}
+		}
 	}
 }
 
@@ -84,6 +97,7 @@ int		main(int ac, char **av, char **env)
 	if (ac >= 2)
 		ft_check_arg(&all, av);
 	ft_init(&all, env, av);
+	close(all.fd_slave);
 	ft_script_signal(&all);
 	ft_stock(&all, 0);
 	ft_script(&all, av);

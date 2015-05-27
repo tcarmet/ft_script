@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:16:49 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/26 14:45:57 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 15:47:13 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_terminate_sig(int i)
 	all = NULL;
 	all = ft_stock(all, 1);
 	(void)i;
-	kill(all->pid_shell, SIGINT);
+	killpg(all->pid_shell, SIGINT);
 }
 
 void	ft_script_signal(t_all *all)
