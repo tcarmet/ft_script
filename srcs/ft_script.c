@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 15:50:10 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 19:53:09 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_exec_cmd(char **env, char **av)
 
 void		ft_read(t_all *all)
 {
-	char		buf[65];
+	char		buf[1025];
 	int			ret;
 
 	while (waitpid(all->pid_shell, &ret, WNOHANG) != all->pid_shell)
@@ -61,13 +61,13 @@ void		ft_read(t_all *all)
 		select(all->fd_master + 1, &(all->set), NULL, NULL, NULL);
 		if (FD_ISSET(0, &(all->set)))
 		{
-			ret = read(0, buf, 64);
+			ret = read(0, buf, 1024);
 			if (ret > 0)
 				write(all->fd_master, buf, ret);
 		}
 		if (FD_ISSET(all->fd_master, &(all->set)))
 		{
-			ret = read(all->fd_master, buf, 64);
+			ret = read(all->fd_master, buf, 1024);
 			if (ret > 0)
 			{
 				write(1, buf, ret);
@@ -92,12 +92,12 @@ int		main(int ac, char **av, char **env)
 {
 	t_all all;
 
-
 	ft_init_all(&all, av, env);
 	if (ac >= 2)
 		ft_check_arg(&all, av);
 	ft_init(&all, env, av);
 	close(all.fd_slave);
+	FD_ZERO(&(all.set));
 	ft_script_signal(&all);
 	ft_stock(&all, 0);
 	ft_script(&all, av);

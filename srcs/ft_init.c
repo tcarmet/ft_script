@@ -6,29 +6,36 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 15:49:38 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/27 19:55:53 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_script.h"
 
-char	*ft_getptyname(int fd_master)
+void		ft_init_term(void)
 {
-	static char name[128];
+	struct termios term;
 
-	if (ioctl(fd_master, TIOCPTYGNAME, name) < 0)
-		return (NULL);
-	return (name);
+	ioctl(0, TIOCGETA, &term);
+	term.c_lflag &= ~(ECHO | ICANON);
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
+	ioctl(0, TIOCSETA, &term);
 }
 
 void	ft_open_pty(t_all *all)
 {
+	static char name[256];
+
 	if ((all->fd_master = open("/dev/ptmx", O_RDWR | O_NOCTTY)) < 0)
 		ft_error(PTY_FAIL);
-	ioctl(all->fd_master, TIOCPTYGRANT);
-	ioctl(all->fd_master, TIOCPTYUNLK);
-	if ((all->fd_slave = open
-		(ft_getptyname(all->fd_master), O_RDWR | O_NOCTTY)) == -1)
+	if ((ioctl(all->fd_master, TIOCPTYGRANT)) < 0)
+		ft_error(PTY_FAIL);
+	if ((ioctl(all->fd_master, TIOCPTYUNLK)) < 0)
+		ft_error(PTY_FAIL);
+	if (ioctl(all->fd_master, TIOCPTYGNAME, name) < 0)
+		ft_error(PTY_FAIL);
+	if ((all->fd_slave = open(name, O_RDWR | O_NOCTTY)) == -1)
 		ft_error(PTY_FAIL);
 }
 
@@ -37,8 +44,8 @@ void	ft_init_all(t_all *all, char **av, char **env)
 	if (!env[0])
 		env[0] = PATH;
 	av[0] = DEFAULT_FILE;
+	ft_init_term();
 	ft_open_pty(all);
-	FD_ZERO(&(all->set));
 	ft_bzero(all->arg, 4);
 }
 
@@ -62,8 +69,6 @@ void	ft_init(t_all *all, char **env, char **av)
 
 	shell[0] = "/bin/zsh";
 	shell[1] = NULL;
-	if (pipe(all->pipe) < 0)
-		ft_error(PIPE_FAIL);
 	all->pid_shell = fork();
 	if (all->pid_shell < 0)
 		ft_error(FORK_FAIL);
