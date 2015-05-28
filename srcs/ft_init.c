@@ -6,20 +6,21 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 19:55:53 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/28 19:47:48 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_script.h"
 
-void		ft_init_term(void)
+void	ft_term(int status)
 {
 	struct termios term;
 
 	ioctl(0, TIOCGETA, &term);
-	term.c_lflag &= ~(ECHO | ICANON);
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
+	if (status == RESTORE)
+		term.c_lflag |= (ICANON | ECHO);
+	else
+		term.c_lflag &= ~(ECHO | ICANON);
 	ioctl(0, TIOCSETA, &term);
 }
 
@@ -41,25 +42,27 @@ void	ft_open_pty(t_all *all)
 
 void	ft_init_all(t_all *all, char **av, char **env)
 {
+
 	if (!env[0])
 		env[0] = PATH;
 	av[0] = DEFAULT_FILE;
-	ft_init_term();
+	ft_term(INIT);
 	ft_open_pty(all);
 	ft_bzero(all->arg, 4);
 }
 
-int			init_pty(int fd_slave)
+int			init_pty(t_all *all)
 {
 	setsid();
-	if (ioctl(fd_slave, TIOCSCTTY, NULL) == -1)
-		return (0);
-	dup2(fd_slave, 0);
-	dup2(fd_slave, 1);
-	dup2(fd_slave, 2);
-	if (fd_slave > 2)
-		close(fd_slave);
-	return (1);
+	if (ioctl(all->fd_slave, TIOCSCTTY, NULL) == -1)
+		return (FALSE);
+	close(all->fd_master);
+	dup2(all->fd_slave, 0);
+	dup2(all->fd_slave, 1);
+	dup2(all->fd_slave, 2);
+	if (all->fd_slave > 2)
+		close(all->fd_slave);
+	return (TRUE);
 }
 
 
@@ -74,7 +77,7 @@ void	ft_init(t_all *all, char **env, char **av)
 		ft_error(FORK_FAIL);
 	if (all->pid_shell == 0)
 	{
-		if (!init_pty(all->fd_slave))
+		if (!init_pty(all))
 			ft_error(PTY_FAIL);
 		if (!CMD)
 			execve(shell[0], shell, env);

@@ -5,7 +5,8 @@ Work in progress...
 
 # To do list
 
-  * command is writing twice! -> working on it...
+  * termcaps
+  * command is writing twice! -> done with termcaps
   * signal Ctrl + C -> working on it...
   * execution prompt avec zsh -> done
   * tty -> done

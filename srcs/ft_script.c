@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/22 12:20:10 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 19:53:09 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/28 19:54:25 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ void		ft_read(t_all *all)
 	char		buf[1025];
 	int			ret;
 
-	while (waitpid(all->pid_shell, &ret, WNOHANG) != all->pid_shell)
+	while ((ret = waitpid(all->pid_shell, NULL, WNOHANG)) == 0 && ret != -1)
 	{
+		FD_ZERO(&(all->set));
 		FD_SET(0, &(all->set));
 		FD_SET(all->fd_master, &(all->set));
 		select(all->fd_master + 1, &(all->set), NULL, NULL, NULL);
@@ -98,8 +99,9 @@ int		main(int ac, char **av, char **env)
 	ft_init(&all, env, av);
 	close(all.fd_slave);
 	FD_ZERO(&(all.set));
-	ft_script_signal(&all);
 	ft_stock(&all, 0);
+	ft_script_signal();
 	ft_script(&all, av);
+	ft_term(RESTORE);
 	return (0);
 }

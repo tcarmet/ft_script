@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 19:56:06 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/28 19:54:34 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <term.h>
-# define IN 1
-# define OUT 0
 # define QUIET all->arg[0]
 # define APPEND all->arg[1]
 # define FILE all->arg[2]
@@ -31,11 +29,14 @@
 # define PATH "PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # define FLAG O_RDWR | O_CREAT | (APPEND ? O_APPEND : O_TRUNC) , 0666
 # define DEFAULT_FILE "typescript"
+# define FALSE 0
+# define TRUE 1
+# define INIT 1
+# define RESTORE 0
 
 typedef enum			e_enum
 {
-	PIPE_FAIL = 1,
-	FORK_FAIL,
+	FORK_FAIL = 1,
 	SHELL_FAIL,
 	ARG_FAIL,
 	OPEN_FAIL,
@@ -50,14 +51,11 @@ typedef enum			e_enum
 typedef struct			s_all
 {
 	fd_set				set;
-	struct sigaction	sig_new;
 	struct timeval		time;
 	pid_t				pid_shell;
-	int					pipe[2];
 	int					fd;
 	int					fd_master;
 	int					fd_slave;
-	int					pty;
 	int					arg[4];
 }						t_all;
 
@@ -78,13 +76,13 @@ void					ft_check_arg(t_all *all, char **av);
 void					ft_init_all(t_all *all, char **av, char **env);
 void					ft_init(t_all *all, char **env, char **av);
 void					ft_open_pty(t_all *all);
-int						init_pty(int fd_slave);
-void					ft_init_term(void);
+int						init_pty(t_all *all);
+void					ft_term(int status);
 /*
 **	ft_signal.c
 */
 t_all					*ft_stock(t_all *all, int i);
-void					ft_script_signal(t_all *all);
+void					ft_script_signal(void);
 /*
 **	ft_script.c
 */

@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:16:49 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/27 20:01:59 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/28 19:54:21 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ t_all	*ft_stock(t_all *all, int i)
 
 void	ft_terminate_sig(int i)
 {
-	t_all *all;
-
-	all = NULL;
-	all = ft_stock(all, 1);
 	(void)i;
-	kill(all->pid_shell, SIGINT);
+	kill(ft_stock(NULL, 1)->pid_shell, SIGINT);
 }
 
-void	ft_script_signal(t_all *all)
+void	ft_script_signal(void)
 {
-	all->sig_new.sa_handler = ft_terminate_sig;
-	sigaction(SIGINT, &all->sig_new, NULL);
+	struct sigaction	sig_new;
+
+	sig_new.sa_handler = ft_terminate_sig;
+	sigaction(SIGINT, &sig_new, NULL);
 }
