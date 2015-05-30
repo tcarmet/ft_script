@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/19 17:47:06 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/28 19:54:34 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/30 19:34:47 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define TRUE 1
 # define INIT 1
 # define RESTORE 0
+# define STOCK ft_stock(NULL, 1)
 
 typedef enum			e_enum
 {

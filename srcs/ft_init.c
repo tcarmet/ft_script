@@ -6,7 +6,7 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/23 17:21:18 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/28 19:47:48 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/30 19:44:07 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_open_pty(t_all *all)
 
 void	ft_init_all(t_all *all, char **av, char **env)
 {
-
 	if (!env[0])
 		env[0] = PATH;
 	av[0] = DEFAULT_FILE;
@@ -51,10 +50,10 @@ void	ft_init_all(t_all *all, char **av, char **env)
 	ft_bzero(all->arg, 4);
 }
 
-int			init_pty(t_all *all)
+int		init_pty(t_all *all)
 {
 	setsid();
-	if (ioctl(all->fd_slave, TIOCSCTTY, NULL) == -1)
+	if (ioctl(all->fd_slave, TIOCSCTTY, NULL) < 0)
 		return (FALSE);
 	close(all->fd_master);
 	dup2(all->fd_slave, 0);
@@ -64,7 +63,6 @@ int			init_pty(t_all *all)
 		close(all->fd_slave);
 	return (TRUE);
 }
-
 
 void	ft_init(t_all *all, char **env, char **av)
 {

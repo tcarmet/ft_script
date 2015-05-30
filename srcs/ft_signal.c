@@ -6,11 +6,11 @@
 /*   By: tcarmet <tcarmet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/05/25 15:16:49 by tcarmet           #+#    #+#             */
-/*   Updated: 2015/05/28 19:54:21 by tcarmet          ###   ########.fr       */
+/*   Updated: 2015/05/30 19:45:01 by tcarmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_script.h"
+#include "ft_script.h"
 
 t_all	*ft_stock(t_all *all, int i)
 {
@@ -24,7 +24,7 @@ t_all	*ft_stock(t_all *all, int i)
 void	ft_terminate_sig(int i)
 {
 	(void)i;
-	kill(ft_stock(NULL, 1)->pid_shell, SIGINT);
+	kill(STOCK->pid_shell, SIGINT);
 }
 
 void	ft_script_signal(void)
