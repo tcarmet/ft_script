@@ -1,12 +1,12 @@
 # ft_script
-script command
 
-Work in progress...
+ft_script is a project of <a href="http://www.42.fr/" target="_blank" >Ecole 42</a>
 
-# To do list
+ft_script is a clone of the script command who makes a typescript of everything
+printed on your terminal.
 
-  * termcaps
-  * command is writing twice! -> done with termcaps
-  * signal Ctrl + C -> working on it...
-  * execution prompt avec zsh -> done
-  * tty -> done
+## Usage
+	$> make
+	$> ./ft_script [-aq] [file [command ...]]
+
+
